@@ -1,0 +1,59 @@
+@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Jost", sans-serif;
+}
+
+/* TITLE-BAR */
+title-bar {
+  padding: 3%;
+}
+/* TITLE-BAR */
+
+/* FAV-LIST */
+favorite-list {
+  padding-top: 60px;
+}
+
+@media screen and (max-height: 450px) {
+  favorite-list {
+    padding-top: 15px;
+  }
+}
+/* FAV-LIST */
+
+.open-btn {
+  margin-top: 2%;
+  background-color: yellow;
+  color: black;
+  cursor: pointer;
+  padding: 1em 1.1em;
+  white-space: nowrap;
+  border: black 1px solid;
+  border-left: none;
+  font-weight: 800;
+}
+
+/* SEARCH BAR */
+search-bar {
+  padding: 5px;
+}
+/* SEARCH BAR */
+
+/* ANIME-LIST */
+anime-list {
+  padding: 2% 2% 10%;
+}
+/* ANIME-LIST */
+
+/* FOOTER-BAR */
+footer-bar {
+  padding: 2%;
+}
+/* FOOTER-BAR */
