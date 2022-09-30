@@ -1,4 +1,6 @@
--- YOUR ANIME LIST --
+###############
+YOUR ANIME LIST
+###############
 
 My Anime List clone. Project for diCoding certification.
 
