@@ -5,7 +5,7 @@ module.exports = {
   entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js",
+    filename: "[name].bundle.js",
   },
   module: {
     rules: [
@@ -21,13 +21,6 @@ module.exports = {
         ],
       },
     ],
-  },
-  optimization: {
-    minimize: false,
-    splitChunks: {
-      filename: "split.bundle.js",
-      chunks: "all",
-    },
   },
   plugins: [
     new HtmlWebpackPlugin({
