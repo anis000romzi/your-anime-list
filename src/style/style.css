@@ -8,6 +8,13 @@
 
 body {
   font-family: "Jost", sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+main {
+  flex: 1;
 }
 
 /* TITLE-BAR */
@@ -39,12 +46,6 @@ favorite-list {
   border-left: none;
   font-weight: 800;
 }
-
-/* SEARCH BAR */
-search-bar {
-  padding: 5px;
-}
-/* SEARCH BAR */
 
 /* ANIME-LIST */
 anime-list {

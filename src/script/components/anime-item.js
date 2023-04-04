@@ -1,7 +1,9 @@
+import { favorite } from '../fav_anime';
+
 class AnimeItem extends HTMLElement {
   constructor() {
     super();
-    this._shadowRoot = this.attachShadow({ mode: "open" });
+    this._shadowRoot = this.attachShadow({ mode: 'open' });
   }
 
   connectedCallback() {
@@ -13,18 +15,29 @@ class AnimeItem extends HTMLElement {
     this.render();
   }
 
-  set clickEvent(event) {
-    this._clickEvent = event;
+  set isFavorited(status) {
+    this._isFavorited = status;
     this.render();
   }
 
-  get animeId() {
-    return this._shadowRoot
-      .querySelector("#item-header")
-      .getAttribute("data-value");
+  set addFavoriteAnime(event) {
+    this._addFavOnClick = event;
+  }
+
+  set deleteFavoriteAnime(event) {
+    this._deleteFavOnClick = event;
   }
 
   render() {
+    const isAnimeFavorited = favorite.filter(
+      (fav) => fav.id === this._anime.mal_id
+    );
+    if (isAnimeFavorited.length > 0) {
+      this._isFavorited = true;
+    } else {
+      this._isFavorited = false;
+    }
+
     const genreName = [];
     this._anime.genres.forEach((genre) => {
       genreName.push(genre.name);
@@ -124,8 +137,14 @@ class AnimeItem extends HTMLElement {
         </style>
 
         <div id="item-header" class="item-header">
-            <h2>${this._anime.title} | ${this._anime.title_japanese} <small>#${this._anime.rank}</small></h2>
-            <button id="fav-btn">Add to favorite &#128150</button>
+            <h2>${this._anime.title} | ${this._anime.title_japanese} <small>#${
+      this._anime.rank
+    }</small></h2>
+            <button id="fav-btn">${
+              this._isFavorited
+                ? 'Remove from favorite &#128148'
+                : 'Add to favorite &#128150'
+            }</button>
           </div>
           <div id="item-body" class="item-body">
             <img
@@ -159,9 +178,16 @@ class AnimeItem extends HTMLElement {
           </div>`;
 
     this._shadowRoot
-      .querySelector("#fav-btn")
-      .addEventListener("click", this._clickEvent);
+      .querySelector('#fav-btn')
+      .addEventListener('click', async () => {
+        if (this._isFavorited) {
+          this._deleteFavOnClick();
+        } else {
+          await this._addFavOnClick();
+        }
+        this.isFavorited = !this.isFavorited;
+      });
   }
 }
 
-customElements.define("anime-item", AnimeItem);
+customElements.define('anime-item', AnimeItem);

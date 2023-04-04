@@ -1,10 +1,10 @@
-import "./favorite-item";
-import {favorite, saveData} from "../fav_anime";
+import './favorite-item';
+import { deleteFavoriteAnime } from '../fav_anime';
 
 class FavoriteList extends HTMLElement {
   constructor() {
     super();
-    this._shadowRoot = this.attachShadow({ mode: "open" });
+    this._shadowRoot = this.attachShadow({ mode: 'open' });
   }
 
   set favAnimes(favorites) {
@@ -26,7 +26,6 @@ class FavoriteList extends HTMLElement {
       box-sizing: border-box;
     }
   
-
     :host {
       height: 100%;
       width: 0;
@@ -64,36 +63,21 @@ class FavoriteList extends HTMLElement {
     <a href="javascript:void(0)" class="closebtn" id="close-btn">&times;</a>
     <h2>Favorite List</h2>`;
     this._shadowRoot
-      .querySelector("#close-btn")
-      .addEventListener("click", this._clickEvent);
-
-    const findAnimeIndex = (id) => {
-      for (const index in favorite) {
-        if (favorite[index].id === id) return index;
-      }
-      return -1;
-    };
-
-    const deleteFav = (animeId) => {
-      const animeTarget = findAnimeIndex(animeId);
-      if (animeTarget === -1) return;
-
-      favorite.splice(animeTarget, 1);
-      saveData();
-      this.render();
-    };
+      .querySelector('#close-btn')
+      .addEventListener('click', this._clickEvent);
 
     this._favAnimes.forEach((favAnime) => {
-      const favoriteItemElement = document.createElement("favorite-item");
-      const test = () => {
-        deleteFav(favAnime.id);
+      const favoriteItemElement = document.createElement('favorite-item');
+      const deleteFav = () => {
+        deleteFavoriteAnime(favAnime.id);
+        this.render();
       };
 
       favoriteItemElement.favAnime = favAnime;
-      favoriteItemElement.clickEvent = test;
+      favoriteItemElement.clickEvent = deleteFav;
       this._shadowRoot.appendChild(favoriteItemElement);
     });
   }
 }
 
-customElements.define("favorite-list", FavoriteList);
+customElements.define('favorite-list', FavoriteList);

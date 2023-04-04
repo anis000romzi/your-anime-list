@@ -1,11 +1,11 @@
-import "./anime-item.js";
-import "./favorite-list.js";
-import {favorite, saveData} from "../fav_anime.js";
+import './anime-item.js';
+import './favorite-list.js';
+import { addFavoriteAnime, deleteFavoriteAnime, favorite } from '../fav_anime.js';
 
 class AnimeList extends HTMLElement {
   constructor() {
     super();
-    this._shadowRoot = this.attachShadow({ mode: "open" });
+    this._shadowRoot = this.attachShadow({ mode: 'open' });
   }
 
   set animes(animes) {
@@ -45,7 +45,7 @@ class AnimeList extends HTMLElement {
       `;
   }
 
-  renderError(message) {
+  renderError(status, message) {
     this._shadowRoot.innerHTML = `
         <style>
         * {
@@ -70,8 +70,8 @@ class AnimeList extends HTMLElement {
           
         </style>
         
-        <h2>There's Nothing Here</h2>
-        <h3>${message}</h3>
+        ${status ? `<h2>${status}</h2>` : ''}
+        ${message ? `<h3>${message}</h3>` : ''}
       `;
   }
 
@@ -84,31 +84,25 @@ class AnimeList extends HTMLElement {
           align-items: center;
         }
       </style>`;
-    const favoriteList = document.querySelector("favorite-list");
+    const favoriteList = document.querySelector('favorite-list');
     this._animes.forEach((anime) => {
-      const animeItemElement = document.createElement("anime-item");
-      const addToFav = () => {
-        fetch(`https://api.jikan.moe/v4/anime/${anime.mal_id}`)
-          .then((response) => response.json())
-          .then((animeJson) => {
-            favorite.push({
-              id: animeJson.data.mal_id,
-              title: animeJson.data.title,
-              title_japan: animeJson.data.title_japanese,
-              img: animeJson.data.images.jpg.image_url,
-              rank: animeJson.data.rank,
-            });
-
-            saveData();
-            favoriteList.favAnimes = favorite;
-          });
+      const animeItemElement = document.createElement('anime-item');
+      const addToFav = async () => {
+        await addFavoriteAnime(anime.mal_id);
+        favoriteList.favAnimes = favorite;
       };
+      const deleteFav = () => {
+        deleteFavoriteAnime(anime.mal_id);
+        favoriteList.favAnimes = favorite;
+      }
 
       animeItemElement.anime = anime;
-      animeItemElement.clickEvent = addToFav;
+      animeItemElement.addFavoriteAnime = addToFav;
+      animeItemElement.deleteFavoriteAnime = deleteFav;
+      animeItemElement.setAttribute('id', anime.mal_id)
       this._shadowRoot.appendChild(animeItemElement);
     });
   }
 }
 
-customElements.define("anime-list", AnimeList);
+customElements.define('anime-list', AnimeList);

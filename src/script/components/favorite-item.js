@@ -1,7 +1,7 @@
 class FavoriteItem extends HTMLElement {
   constructor() {
     super();
-    this._shadowRoot = this.attachShadow({ mode: "open" });
+    this._shadowRoot = this.attachShadow({ mode: 'open' });
   }
 
   connectedCallback() {
@@ -68,9 +68,14 @@ class FavoriteItem extends HTMLElement {
         `;
 
     this._shadowRoot
-      .querySelector("#remove-fav")
-      .addEventListener("click", this._clickEvent);
+      .querySelector('#remove-fav')
+      .addEventListener('click', () => {
+        this._clickEvent();
+        document
+          .querySelector('anime-list')
+          ._shadowRoot.getElementById(this._favAnime.id).isFavorited = false;
+      });
   }
 }
 
-customElements.define("favorite-item", FavoriteItem);
+customElements.define('favorite-item', FavoriteItem);

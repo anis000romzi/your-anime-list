@@ -20,7 +20,7 @@ class SearchBar extends HTMLElement {
   render() {
     this._shadowRoot.innerHTML = `
     <style>
-    :host {
+    form {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -46,17 +46,21 @@ class SearchBar extends HTMLElement {
         border-radius: 50px;
         border: black 1px solid;
     </style>
-
-    <input placeholder="Search Anime" id="search-value" type="search" />
-    <button id="search-button" type="submit">
-    &#128270
-    </button>
+    <form id="search-anime">
+      <input placeholder="Search Anime" id="search-value" type="search" />
+      <button id="search-button" type="submit">
+      &#128270
+      </button>
+    </form>
 
       `;
 
     this._shadowRoot
-      .querySelector("#search-button")
-      .addEventListener("click", this._clickEvent);
+      .querySelector("#search-anime")
+      .addEventListener("submit", (event) => {
+        event.preventDefault();
+        this._clickEvent();
+      });
   }
 }
 

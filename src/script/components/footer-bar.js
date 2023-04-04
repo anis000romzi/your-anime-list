@@ -15,8 +15,6 @@ class FooterBar extends HTMLElement {
             display: flex;
             flex-direction: column;
             align-items: center;
-            position: fixed;
-            bottom: 0;
             width: 100%;
             background-color: aqua;
         }
@@ -26,7 +24,7 @@ class FooterBar extends HTMLElement {
         }
         </style>
   
-        <strong>Copyright© 2022 by lordanis123</strong>
+        <strong>Copyright© ${new Date().getFullYear()} by lordanis123</strong>
         <small>
         Powered by
         <a href="https://jikan.moe/" target="_blank">Jikan (時間)</a> and

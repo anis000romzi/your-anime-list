@@ -1,7 +1,7 @@
 class TitleBar extends HTMLElement {
   constructor() {
     super();
-    this._shadowRoot = this.attachShadow({ mode: "open" });
+    this._shadowRoot = this.attachShadow({ mode: 'open' });
   }
 
   connectedCallback() {
@@ -32,7 +32,7 @@ class TitleBar extends HTMLElement {
         }
       
         h1 {
-            font-size: 4em;
+            font-size: 3.5em;
         }
           
         @media screen and (max-width: 420px) {
@@ -47,10 +47,14 @@ class TitleBar extends HTMLElement {
         </style>
 
         <h1>Your Anime List</h1>
-        <em>"${this._quote.quote}"</em>
-        <em>- ${this._quote.character} from ${this._quote.anime}</em>
+        ${
+          !this._quote
+            ? `<em>...</em>`
+            : `<em>"${this._quote.quote}"</em>
+        <em>- ${this._quote.character} from ${this._quote.anime}</em>`
+        }
         `;
   }
 }
 
-customElements.define("title-bar", TitleBar);
+customElements.define('title-bar', TitleBar);
