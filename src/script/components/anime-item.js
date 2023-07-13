@@ -129,6 +129,12 @@ class AnimeItem extends HTMLElement {
             flex-direction: column;
           }
 
+          .item-desc > h4 {
+            align-self: unset;
+            width: 100%;
+            text-align: center;
+          }
+
           .item-desc > p {
             border-top: black 1px solid;
             border-left: none;

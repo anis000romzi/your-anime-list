@@ -28,7 +28,7 @@ class FooterBar extends HTMLElement {
         <small>
         Powered by
         <a href="https://jikan.moe/" target="_blank">Jikan (時間)</a> and
-        <a href="https://animechan.vercel.app/" target="_blank">
+        <a href="https://animechan.xyz/" target="_blank">
             Animechan
         </a>
         </small>

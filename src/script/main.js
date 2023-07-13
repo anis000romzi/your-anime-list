@@ -16,7 +16,7 @@ const main = async () => {
     try {
       showMessage('loading ...');
       const response = await fetch(
-        `https://api.jikan.moe/v4/anime?letter=${searchElement.value}&type=tv&order_by=popularity&sort=asc&sfw=true`
+        `https://api.jikan.moe/v4/anime?q=${searchElement.value}&type=tv&order_by=popularity&sort=asc&sfw=true`
       );
       const responseJson = await response.json();
 
@@ -56,7 +56,7 @@ const main = async () => {
   favoriteList.clickEvent = closeFavList;
   /**  Open and close favorite list **/
 
-  const response = await fetch('https://animechan.vercel.app/api/random');
+  const response = await fetch('https://animechan.xyz/api/random');
   const responseJson = await response.json();
   titleElement.quote = responseJson;
 };
