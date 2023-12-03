@@ -1,9 +1,9 @@
-import { favorite } from '../fav_anime';
+import { favorite } from "../fav_anime";
 
 class AnimeItem extends HTMLElement {
   constructor() {
     super();
-    this._shadowRoot = this.attachShadow({ mode: 'open' });
+    this._shadowRoot = this.attachShadow({ mode: "open" });
   }
 
   connectedCallback() {
@@ -148,8 +148,8 @@ class AnimeItem extends HTMLElement {
     }</small></h2>
             <button id="fav-btn">${
               this._isFavorited
-                ? 'Remove from favorite &#128148'
-                : 'Add to favorite &#128150'
+                ? "Remove from favorite &#128148"
+                : "Add to favorite &#128150"
             }</button>
           </div>
           <div id="item-body" class="item-body">
@@ -159,33 +159,33 @@ class AnimeItem extends HTMLElement {
               alt="Image"
             />
             <ul>
-              <li>Score: ${this._anime.score}</li>
-              <li id="genre">Genre: ${genre}</li>
-              <li>Episodes: ${this._anime.episodes}</li>
-              <li>Duration: ${this._anime.duration}</li>
-              <li>Status: ${this._anime.status}</li>
-              <li>Aired: ${this._anime.aired.string}</li></li>
-              <li>Rating: ${this._anime.rating}</li>
+              <li>Score: ${this._anime.score ?? "-"}</li>
+              <li id="genre">Genre: ${genre ?? "-"}</li>
+              <li>Episodes: ${this._anime.episodes ?? "-"}</li>
+              <li>Duration: ${this._anime.duration ?? "-"}</li>
+              <li>Status: ${this._anime.status ?? "-"}</li>
+              <li>Aired: ${this._anime.aired.string ?? "-"}</li></li>
+              <li>Rating: ${this._anime.rating ?? "-"}</li>
               <li>
-                Trailer:
-                <a
-                  href="${this._anime.trailer.url}"
-                  target="_blank"
-                  >${this._anime.trailer.url}</a
-                >
+                Trailer: ${
+                  this._anime.trailer.url
+                    ? `
+                <a href="${this._anime.trailer.url}" target="_blank">${this._anime.trailer.url}</a>`
+                    : "-"
+                }
               </li>
             </ul>
           </div>
           <div id="item-desc" class="item-desc">
             <h4>Synopsis</h4>
             <p>
-            ${this._anime.synopsis}
+            ${this._anime.synopsis ?? '-'}
             </p>
           </div>`;
 
     this._shadowRoot
-      .querySelector('#fav-btn')
-      .addEventListener('click', async () => {
+      .querySelector("#fav-btn")
+      .addEventListener("click", async () => {
         if (this._isFavorited) {
           this._deleteFavOnClick();
         } else {
@@ -196,4 +196,4 @@ class AnimeItem extends HTMLElement {
   }
 }
 
-customElements.define('anime-item', AnimeItem);
+customElements.define("anime-item", AnimeItem);
