@@ -50,8 +50,8 @@ class TitleBar extends HTMLElement {
         ${
           !this._quote
             ? `<em>...</em>`
-            : `<em>"${this._quote.quote}"</em>
-        <em>- ${this._quote.character} from ${this._quote.anime}</em>`
+            : `<em>"${this._quote.content}"</em>
+        <em>- ${this._quote.character.name} from ${this._quote.anime.name}</em>`
         }
         `;
   }

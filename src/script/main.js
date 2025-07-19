@@ -56,9 +56,9 @@ const main = async () => {
   favoriteList.clickEvent = closeFavList;
   /**  Open and close favorite list **/
 
-  const response = await fetch('https://animechan.xyz/api/random');
+  const response = await fetch('https://api.animechan.io/v1/quotes/random');
   const responseJson = await response.json();
-  titleElement.quote = responseJson;
+  titleElement.quote = responseJson.data;
 };
 
 export default main;
