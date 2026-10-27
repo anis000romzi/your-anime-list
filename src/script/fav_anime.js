@@ -32,16 +32,15 @@ const deleteFavoriteAnime = (animeId) => {
   saveData();
 };
 
-const addFavoriteAnime = async (animeId) => {
-  const response = await fetch(`https://api.jikan.moe/v4/anime/${animeId}`);
-  const responseJson = await response.json();
+const addFavoriteAnime = (anime) => {
+  if (findAnimeIndex(anime.mal_id) !== -1) return;
 
   favorite.push({
-    id: responseJson.data.mal_id,
-    title: responseJson.data.title,
-    title_japan: responseJson.data.title_japanese,
-    img: responseJson.data.images.jpg.image_url,
-    rank: responseJson.data.rank,
+    id: anime.mal_id,
+    title: anime.title,
+    title_japan: anime.title_japanese,
+    img: anime.images.jpg.image_url,
+    rank: anime.rank,
   });
   saveData();
 }

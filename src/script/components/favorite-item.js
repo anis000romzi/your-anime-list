@@ -59,8 +59,10 @@ class FavoriteItem extends HTMLElement {
         alt="Image"
         />
         <div id="fav-desc" class="fav-desc">
-            <h4>${this._favAnime.title} <small>#${this._favAnime.rank ?? '-'}</small></h4>
-            <h5>${this._favAnime.title_japan}</h5>
+            <h4>${this._favAnime.title}${Number(this._favAnime.rank) > 0
+              ? ` <small>#${this._favAnime.rank}</small>` : ''}</h4>
+            ${this._favAnime.title_japan && this._favAnime.title_japan !== '-'
+              ? `<h5>${this._favAnime.title_japan}</h5>` : ''}
             <button id="remove-fav">
             &#128148
             </button>

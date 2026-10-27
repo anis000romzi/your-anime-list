@@ -70,9 +70,17 @@ class AnimeList extends HTMLElement {
           
         </style>
         
-        ${status ? `<h2>${status}</h2>` : ''}
-        ${message ? `<h3>${message}</h3>` : ''}
       `;
+    if (status) {
+      const heading = document.createElement('h2');
+      heading.textContent = status;
+      this._shadowRoot.appendChild(heading);
+    }
+    if (message) {
+      const detail = document.createElement('h3');
+      detail.textContent = message;
+      this._shadowRoot.appendChild(detail);
+    }
   }
 
   render() {
@@ -88,7 +96,7 @@ class AnimeList extends HTMLElement {
     this._animes.forEach((anime) => {
       const animeItemElement = document.createElement('anime-item');
       const addToFav = async () => {
-        await addFavoriteAnime(anime.mal_id);
+        addFavoriteAnime(anime);
         favoriteList.favAnimes = favorite;
       };
       const deleteFav = () => {

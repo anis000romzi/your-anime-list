@@ -2,6 +2,7 @@ import './components/title-bar.js';
 import './components/search-bar.js';
 import './components/anime-list.js';
 import { favorite, loadData } from './fav_anime.js';
+import { ANIME_API_BASE_URL } from './anime-api.js';
 
 const main = async () => {
   const favoriteList = document.querySelector('favorite-list');
@@ -12,24 +13,53 @@ const main = async () => {
   loadData();
   favoriteList.favAnimes = favorite;
 
+  let searchPending = false;
   const onSearch = async () => {
+    if (searchPending) return;
+    const query = searchElement.value.trim();
+    if (!query) {
+      showMessage('Search Anime', 'Enter an anime title to search.');
+      return;
+    }
+    searchPending = true;
     try {
       showMessage('loading ...');
+      const params = new URLSearchParams({
+        q: query,
+        type: 'tv',
+        order_by: 'popularity',
+        sort: 'asc',
+        sfw: 'true',
+      });
       const response = await fetch(
-        `https://api.jikan.moe/v4/anime?q=${searchElement.value}&type=tv&order_by=popularity&sort=asc&sfw=true`
+        `${ANIME_API_BASE_URL}/anime?${params}`
       );
+      if (!response.ok) {
+        throw new Error(response.status === 429
+          ? 'Too many requests. Please wait a minute and try again.'
+          : `Tenrai request failed (HTTP ${response.status}). Please try again later.`);
+      }
       const responseJson = await response.json();
+      if (!Array.isArray(responseJson.data)) {
+        throw new Error('Tenrai returned an unexpected response. Please try again later.');
+      }
 
-      if (responseJson.data.length > 0) {
-        showList(responseJson.data);
+      const animes = responseJson.data;
+      if (animes.length > 0) {
+        showList(animes);
       } else {
         showMessage(
           "There's Nothing Here",
-          `"${searchElement.value}" not found`
+          `"${query}" not found`
         );
       }
     } catch (error) {
-      showMessage('Something went wrong :(', error.message);
+      console.error('Anime search failed:', error);
+      showMessage('Something went wrong :(', error instanceof TypeError
+        ? 'Could not reach Tenrai. Check your connection and the browser Console for a blocked request or CORS error.'
+        : error.message);
+    } finally {
+      searchPending = false;
     }
   };
 

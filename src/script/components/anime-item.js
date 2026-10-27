@@ -142,10 +142,13 @@ class AnimeItem extends HTMLElement {
         }
         </style>
 
+
+
         <div id="item-header" class="item-header">
-            <h2>${this._anime.title} | ${this._anime.title_japanese} <small>#${
-      this._anime.rank
-    }</small></h2>
+            <h2>${this._anime.title}${
+      this._anime.title_japanese && this._anime.title_japanese !== '-'
+        ? ` | ${this._anime.title_japanese}` : ''
+    }${Number(this._anime.rank) > 0 ? ` <small>#${this._anime.rank}</small>` : ''}</h2>
             <button id="fav-btn">${
               this._isFavorited
                 ? "Remove from favorite &#128148"
@@ -160,7 +163,7 @@ class AnimeItem extends HTMLElement {
             />
             <ul>
               <li>Score: ${this._anime.score ?? "-"}</li>
-              <li id="genre">Genre: ${genre ?? "-"}</li>
+              <li id="genre">Genre: ${genre.length ? genre.join(', ') : "-"}</li>
               <li>Episodes: ${this._anime.episodes ?? "-"}</li>
               <li>Duration: ${this._anime.duration ?? "-"}</li>
               <li>Status: ${this._anime.status ?? "-"}</li>

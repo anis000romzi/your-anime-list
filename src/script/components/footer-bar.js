@@ -27,7 +27,7 @@ class FooterBar extends HTMLElement {
         <strong>Copyright© ${new Date().getFullYear()} by lordanis123</strong>
         <small>
         Powered by
-        <a href="https://jikan.moe/" target="_blank">Jikan (時間)</a> and
+        <a href="https://tenrai.org/" target="_blank">Tenrai</a> and
         <a href="https://animechan.io/" target="_blank">
             Animechan
         </a>
